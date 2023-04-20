@@ -26,11 +26,18 @@ const initialValues: FormState = {
   vacancy: selectValues[0],
 };
 
+const getNextDate = () => {
+  const currentDayInMilli = new Date().getTime();
+  const oneDay = 1000 * 60 * 60 * 24;
+  const nextDayInMilli = currentDayInMilli + oneDay;
+  return new Date(nextDayInMilli);
+};
+
 interface ControllBarProps {
   activeSelect: Pair;
   onSelect: (pair: Pair) => void;
   onChangeViewClick: (view: 'items' | 'maps') => void;
-  onDateChange: (newDateRange: [Date, Date] | null) => void;
+  onDateChange: (newDateRange: [tomorrow: Date, tomorrow: Date] | null) => void;
   onReset: () => void;
   value: [Date, Date] | null;
 }
@@ -60,7 +67,7 @@ export const ControllBar: React.FC<ControllBarProps> = ({
                   }
                 }}
                 ranges={[]}
-                value={value}
+                value={value ?? [getNextDate(), getNextDate()]}
                 isoWeek
                 locale={{
                   sunday: 'Вс',
