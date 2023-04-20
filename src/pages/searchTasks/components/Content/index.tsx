@@ -114,12 +114,14 @@ export const Content: React.FC = () => {
         '₽/день' +
         '</div>',
       balloonContentFooter:
-        '<div style="padding: 10px 0;display:flex; justify-content: space-between;border-top: 1px solid #DEE3E8;">' +
+        '<div style="padding: 10px 0;display:flex; justify-content: space-between;border-top: 1px solid #DEE3E8;gap:12px;">' +
+        '<div style="display:flex;gap:10px;align-items:center;">' +
         '<svg width="12" height="20" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 0C2.6856 0 0 2.78799 0 6.2414C0 12.2126 6 20 6 20C6 20 12 12.2114 12 6.2414C12 2.78924 9.3144 0 6 0ZM6 9.69481C4.2096 9.69481 2.76 8.18261 2.76 6.3177C2.76 4.45278 4.2096 2.94059 6 2.94059C7.788 2.94059 9.2388 4.45278 9.2388 6.3177C9.2388 8.18261 7.788 9.69481 6 9.69481Z" fill="#FFD480"></path></svg>' +
-        '<div style="color: #000; margin-left: 10px;">' +
+        '<div style="color: #000;">' +
         String(cities[index].address_full) +
         '</div>' +
-        '<div style="display: flex; flex-direction: row; align-items: center; padding: 0px 10px; gap: 8px;border: 2px solid #3C2D96;border-radius:8px;">' +
+        '</div>' +
+        '<div style="display: flex; flex-direction: row; align-items: center; padding: 10px 10px; gap: 8px;border: 2px solid #3C2D96;border-radius:8px;">' +
         '<a href="/"><div style="min-width:103px; height:20px;font-size:14px;text-align:center;color: #3C2D96;">Взять в работу</div></a>' +
         '</div>' +
         '</div>',
@@ -271,7 +273,7 @@ export const Content: React.FC = () => {
             >
               <Clusterer
                 options={{
-                  preset: 'islands#invertedVioletClusterIcons',
+                  preset: 'islands#nightClusterIcons',
                   groupByCoordinates: false,
                   minClusterSize: 2,
                   clusterIcons: [
