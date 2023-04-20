@@ -20,4 +20,6 @@ export interface Task {
   status: string;
   driveway: number;
   task_type: string;
+  latitude: string;
+  longitude: string;
 }

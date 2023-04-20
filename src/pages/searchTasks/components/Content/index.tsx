@@ -6,7 +6,7 @@ import { TaskCard } from '../TaskCard';
 import styles from './styles.module.scss';
 import { useWindowResize } from '../../../../hooks/useWindowResize';
 import { useTabs } from '../../../../hooks/useTabs';
-import { Map, Placemark, YMaps } from '@pbe/react-yandex-maps';
+import { Map, Placemark, YMaps, Clusterer } from '@pbe/react-yandex-maps';
 import { formatWorkHours } from '../../../../helpers/formatWorkHours';
 import { TaskCardMobile } from '../TaskCardMobile';
 import { Button } from '../../../../UI/Button';
@@ -15,6 +15,7 @@ import {
   useAcceptTaskMutation,
   useDismissMyTasksMutation,
   useGetTasksQuery,
+  useGetTasksPlacemarks,
 } from '../../../../modules/tasks';
 import { AuthContext } from '../../../../modules/auth';
 import { type Pair } from '../../../../UI/Select';
@@ -66,6 +67,39 @@ export const Content: React.FC = () => {
     setDate([start, end]);
     await queryClient.invalidateQueries(['tasks']);
     await refetchTasks();
+  };
+
+  const getPlacemarksQuery = useGetTasksPlacemarks(authContext.token);
+  const cities = getPlacemarksQuery.data
+    ? getPlacemarksQuery.data.data.placemarks
+    : [];
+
+  const getPointData = function (index: number) {
+    return {
+      clusterCaption: 'placemark <strong>2</strong>',
+      hintContent:
+        String(cities[index].price) +
+        ' ₽/' +
+        String(cities[index].task_type) +
+        ' или ' +
+        String(cities[index].sum_shift) +
+        '₽/день',
+      // balloonContentHeader: String(cities[index].customer_name),
+      // balloonContentBody: 'Содержимое <em>балуна</em> метки',
+      // balloonContentFooter: 'Подвал',
+      iconCaption: String(cities[index].customer_name),
+    };
+  };
+
+  const getPointOptions = function (index: number) {
+    return {
+      iconLayout: 'default#image',
+      iconImageHref:
+        'https://api.delovoi.me/images/logo/' +
+        String(cities[index].customer_logo),
+      iconImageSize: [30, 30],
+      openEmptyBalloon: true,
+    };
   };
 
   const onReset = async () => {
@@ -190,93 +224,42 @@ export const Content: React.FC = () => {
               width="100%"
               height="360px"
               style={{ flex: '1 1 300px', minHeight: '700px' }}
-              defaultState={{ center: [55.75, 37.57], zoom: 12 }}
+              defaultState={{ center: [55.75, 37.57], zoom: 6 }}
+              modules={[
+                'geoObject.addon.balloon',
+                'geoObject.addon.hint',
+                'util.bounds',
+                'templateLayoutFactory',
+                'layout.ImageWithContent',
+              ]}
             >
-              <Placemark
-                geometry={[55.65, 37.658521]}
+              <Clusterer
                 options={{
-                  iconLayout: 'default#image',
-                  iconImageHref:
-                    'https://api.delovoi.me/images/logo/GJ_mini.svg',
-                  iconImageSize: [60, 60],
+                  preset: 'islands#invertedVioletClusterIcons',
+                  groupByCoordinates: false,
+                  minClusterSize: 2,
+                  clusterIcons: [
+                    {
+                      href: 'https://api.delovoi.me/images/logo/logoCluster.png',
+                      size: [30, 30],
+                      offset: [0, 0],
+                    },
+                  ],
                 }}
-                properties={{
-                  // balloonContent: '<div id="driver-2" class="driver-card"></div>',
-                  hintContent: '<b> Я появляюсь при наведении на метку </b>',
-                  balloonContentHeader: 'Балун метки',
-                  balloonContentBody: 'Содержимое <em>балуна</em> метки',
-                  balloonContentFooter: 'Подвал',
-                }}
-                modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
-              />
-              <Placemark
-                geometry={[55.75, 37.62]}
-                options={{
-                  iconLayout: 'default#image',
-                  iconImageHref:
-                    'https://api.delovoi.me/images/logo/GJ_mini.svg',
-                  iconImageSize: [60, 60],
-                }}
-                properties={{
-                  // balloonContent: '<div id="driver-2" class="driver-card"></div>',
-                  hintContent: '<b> Я появляюсь при наведении на метку </b>',
-                  balloonContentHeader: 'Балун метки',
-                  balloonContentBody: 'Содержимое <em>балуна</em> метки',
-                  balloonContentFooter: 'Подвал',
-                }}
-                modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
-              />
-              <Placemark
-                geometry={[55.8, 37.658521]}
-                options={{
-                  iconLayout: 'default#image',
-                  iconImageHref:
-                    'https://api.delovoi.me/images/logo/GJ_mini.svg',
-                  iconImageSize: [60, 60],
-                }}
-                properties={{
-                  // balloonContent: '<div id="driver-2" class="driver-card"></div>',
-                  hintContent: '<b> Я появляюсь при наведении на метку </b>',
-                  balloonContentHeader: 'Балун метки',
-                  balloonContentBody: 'Содержимое <em>балуна</em> метки',
-                  balloonContentFooter: 'Подвал',
-                }}
-                modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
-              />
-              <Placemark
-                geometry={[55.745, 37.49]}
-                options={{
-                  iconLayout: 'default#image',
-                  iconImageHref:
-                    'https://api.delovoi.me/images/logo/GJ_mini.svg',
-                  iconImageSize: [60, 60],
-                }}
-                properties={{
-                  // balloonContent: '<div id="driver-2" class="driver-card"></div>',
-                  hintContent: '<b> Я появляюсь при наведении на метку </b>',
-                  balloonContentHeader: 'Балун метки',
-                  balloonContentBody: 'Содержимое <em>балуна</em> метки',
-                  balloonContentFooter: 'Подвал',
-                }}
-                modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
-              />
-              <Placemark
-                geometry={[55.69, 37.55]}
-                options={{
-                  iconLayout: 'default#image',
-                  iconImageHref:
-                    'https://api.delovoi.me/images/logo/GJ_mini.svg',
-                  iconImageSize: [60, 60],
-                }}
-                properties={{
-                  // balloonContent: '<div id="driver-2" class="driver-card"></div>',
-                  hintContent: '<b> Я появляюсь при наведении на метку </b>',
-                  balloonContentHeader: 'Балун метки',
-                  balloonContentBody: 'Содержимое <em>балуна</em> метки',
-                  balloonContentFooter: 'Подвал',
-                }}
-                modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
-              />
+              >
+                {cities.map((items, index) => (
+                  <Placemark
+                    key={items.id}
+                    geometry={[items.latitude, items.longitude]}
+                    modules={[
+                      'geoObject.addon.balloon',
+                      'geoObject.addon.hint',
+                    ]}
+                    properties={getPointData(index)}
+                    options={getPointOptions(index)}
+                  />
+                ))}
+              </Clusterer>
             </Map>
           </YMaps>
         </>
