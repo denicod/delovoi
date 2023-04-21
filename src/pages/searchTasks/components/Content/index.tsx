@@ -136,7 +136,7 @@ export const Content: React.FC = () => {
       iconImageHref:
         'https://api.delovoi.me/images/logo/' +
         String(cities[index].customer_logo),
-      iconImageSize: [40, 40],
+      iconImageSize: [35, 35],
     };
   };
 
@@ -291,7 +291,7 @@ export const Content: React.FC = () => {
                   clusterIcons: [
                     {
                       href: 'https://api.delovoi.me/images/logo/logoCluster.png',
-                      size: [47, 47],
+                      size: [55, 55],
                       offset: [0, 0],
                     },
                   ],
