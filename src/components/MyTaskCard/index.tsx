@@ -173,7 +173,7 @@ export const MyTaskCard: React.FC<MyTaskCardProps> = ({
         </div>
         <div className={styles.controlls}>
           <a
-            href={`https://yandex.ru/maps/193/voronezh/?ll=${longtitude}%2C${latitude}&z=15`}
+            href={`https://yandex.ru/maps/?ll=${longtitude}%2C${latitude}&z=15&mode=routes&rtext=~${latitude}%2C${longtitude}&rtt=auto&ruri=~`}
             target="_blank"
             rel="noreferrer"
           >

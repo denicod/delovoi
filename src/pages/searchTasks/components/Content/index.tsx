@@ -76,7 +76,8 @@ export const Content: React.FC = () => {
 
   const getPointData = function (index: number) {
     return {
-      clusterCaption: 'placemark <strong>2</strong>',
+      clusterCaption:
+        String(cities[index].customer_name) + String(cities[index].object),
       hintContent:
         String(cities[index].price) +
         ' ₽/' +
@@ -136,7 +137,6 @@ export const Content: React.FC = () => {
         'https://api.delovoi.me/images/logo/' +
         String(cities[index].customer_logo),
       iconImageSize: [30, 30],
-      openEmptyBalloon: true,
     };
   };
 
@@ -263,6 +263,7 @@ export const Content: React.FC = () => {
               height="360px"
               style={{ flex: '1 1 300px', minHeight: '700px' }}
               defaultState={{ center: [55.75, 37.57], zoom: 6 }}
+              maxZoom="10"
               modules={[
                 'geoObject.addon.balloon',
                 'geoObject.addon.hint',
@@ -270,6 +271,17 @@ export const Content: React.FC = () => {
                 'templateLayoutFactory',
                 'layout.ImageWithContent',
               ]}
+              onLoad={(ymaps) => {
+                console.log(ymaps);
+                const points = [
+                  [55.984758, 39.938521],
+                  [55.684758, 37.738521],
+                ];
+                console.log(ymaps, points);
+                // ymaps.Map.prototype.setBounds(
+                //   ymaps.util.bounds.fromPoints(points)
+                // );
+              }}
             >
               <Clusterer
                 options={{
@@ -283,6 +295,8 @@ export const Content: React.FC = () => {
                       offset: [0, 0],
                     },
                   ],
+                  balloonContentLayout: 'cluster#balloonTwoColumns',
+                  // maxZoom: 20, // Позволяет скрывать несколько меток на одних координатах при таком зуме
                 }}
               >
                 {cities.map((items, index) => (
