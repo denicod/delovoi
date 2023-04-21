@@ -136,7 +136,7 @@ export const Content: React.FC = () => {
       iconImageHref:
         'https://api.delovoi.me/images/logo/' +
         String(cities[index].customer_logo),
-      iconImageSize: [30, 30],
+      iconImageSize: [40, 40],
     };
   };
 
@@ -262,7 +262,7 @@ export const Content: React.FC = () => {
               width="100%"
               height="360px"
               style={{ flex: '1 1 300px', minHeight: '700px' }}
-              defaultState={{ center: [55.75, 37.57], zoom: 6 }}
+              defaultState={{ center: [55.75, 37.57], zoom: 10 }}
               maxZoom="10"
               modules={[
                 'geoObject.addon.balloon',
@@ -291,7 +291,7 @@ export const Content: React.FC = () => {
                   clusterIcons: [
                     {
                       href: 'https://api.delovoi.me/images/logo/logoCluster.png',
-                      size: [30, 30],
+                      size: [47, 47],
                       offset: [0, 0],
                     },
                   ],
