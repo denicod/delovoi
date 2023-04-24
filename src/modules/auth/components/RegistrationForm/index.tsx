@@ -208,7 +208,10 @@ export const RegistrationForm: React.FC = () => {
               </div>
               <div>
                 Нажимая на кнопку я даю свое согласие на обработку персональных
-                данных и соглашаюсь с условиями Политики конфиденциальности
+                данных и соглашаюсь с условиями&nbsp;
+                <a href="https://delovoi.me/legal/privacy_policy.pdf">
+                  Политики конфиденциальности
+                </a>
               </div>
             </label>
             <div className={styles.controlls__wrapper}>
